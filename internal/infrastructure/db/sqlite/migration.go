@@ -11,7 +11,7 @@ var tableCreationQueries = map[string]string{
 	"rooms":   ROOM_TABLE_QUERY,
 }
 
-func CreateTables(db *sql.DB) error {
+func migrate(db *sql.DB) error {
 	for tableName, createQuery := range tableCreationQueries {
 		if _, err := db.Exec(createQuery); err != nil {
 			return fmt.Errorf("failed to create table %s: %w", tableName, err)

@@ -1,20 +1,15 @@
 package main
 
 import (
-	"log"
-
+	"github.com/elyarsadig/smart-home-iot/config"
 	"github.com/elyarsadig/smart-home-iot/internal/infrastructure/db/sqlite"
+	httpPackage "github.com/elyarsadig/smart-home-iot/internal/infrastructure/http"
 )
 
 func main() {
-	db, err := sqlite.InitDB()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+	cfg := config.LoadConfig()
+	
+	db := sqlite.InitDB(&cfg.Database)
 
-	err = sqlite.CreateTables(db)
-	if err != nil {
-		log.Fatal(err)
-	}
+	httpPackage.SetupAndServe(cfg, db)
 }

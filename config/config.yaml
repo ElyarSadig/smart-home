@@ -6,6 +6,7 @@ server:
   cors_allowed_origins:
     - "http://localhost:8080"
 database:
+  file_path: "./internal/infrastructure/db/sqlite/smart_home.db"
   connection_timeout: 5s
   conn_max_lifetime: 600s
   max_open_conns: 10

@@ -2,7 +2,7 @@ package http
 
 import "net/http"
 
-func NewRouter() *http.ServeMux {
+func newRouter() *http.ServeMux {
 	mux := http.NewServeMux()
 	return mux
 }
