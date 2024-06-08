@@ -18,6 +18,10 @@ func InitDB(cfg *config.DatabaseConfig) *sql.DB {
 		log.Fatal(err)
 	}
 
+	db.SetMaxOpenConns(cfg.MaxOpenConns)
+    db.SetMaxIdleConns(cfg.MaxIdleConns)
+    db.SetConnMaxLifetime(cfg.ConnMaxLifetime)
+
 	err = migrate(db)
 	if err != nil {
 		log.Fatal(err)
