@@ -12,8 +12,10 @@ type DeviceRepository struct {
 	db *sql.DB
 }
 
-func NewDevice() models.DeviceRepository {
-	return &DeviceRepository{}
+func NewDevice(db *sql.DB) models.DeviceRepository {
+	return &DeviceRepository{
+		db: db,
+	}
 }
 
 func (r *DeviceRepository) GetByName(ctx context.Context, name string) (*models.Device, error) {

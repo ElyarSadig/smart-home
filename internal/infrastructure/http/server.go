@@ -14,8 +14,7 @@ import (
 	"github.com/elyarsadig/smart-home-iot/config"
 )
 
-func SetupAndServe(cfg *config.Config, db *sql.DB) {
-	router := newRouter()
+func SetupAndServe(cfg *config.Config, db *sql.DB, router *http.ServeMux) {
 	corsMiddleware := cors(cfg.Server.CORSAllowedOrigins)
 	wrappedRouter := corsMiddleware(router)
 

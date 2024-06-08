@@ -12,8 +12,10 @@ type RoomRepository struct {
 	db *sql.DB
 }
 
-func NewRoom() models.RoomRepository {
-	return &RoomRepository{}
+func NewRoom(db *sql.DB) models.RoomRepository {
+	return &RoomRepository{
+		db: db,
+	}
 }
 
 func (r *RoomRepository) GetByName(ctx context.Context, name string) (*models.Room, error) {
