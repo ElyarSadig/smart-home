@@ -3,8 +3,10 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"log"
 
+	"github.com/elyarsadig/smart-home-iot/config"
 	"github.com/elyarsadig/smart-home-iot/internal/domain/models"
 )
 
@@ -23,14 +25,17 @@ func (r *RoomRepository) GetByName(ctx context.Context, name string) (*models.Ro
 	stmt, err := r.db.PrepareContext(ctx, query)
 	if err != nil {
 		log.Printf("Error preparing: %v", err)
-		return nil, err
+		return nil, config.InternalServerError
 	}
 	row := stmt.QueryRowContext(ctx, name)
 	var room models.Room
 	err = row.Scan(&room)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, config.NotFoundError
+		}
 		log.Printf("Error scaning row: %v", err)
-		return nil, err
+		return nil, config.InternalServerError
 	}
 	return &room, nil
 }

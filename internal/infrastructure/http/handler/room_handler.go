@@ -1,8 +1,10 @@
 package handler
 
 import (
+	"errors"
 	"net/http"
 
+	"github.com/elyarsadig/smart-home-iot/config"
 	"github.com/elyarsadig/smart-home-iot/internal/domain/service"
 )
 
@@ -23,6 +25,10 @@ func (h *RoomHandler) GetByName(w http.ResponseWriter, r *http.Request) {
 	}
 	device, err := h.Service.GetByName(ctx, name)
 	if err != nil {
+		if errors.Is(err, config.NotFoundError) {
+			returnError(w, "room not found", http.StatusNotFound)
+			return
+		}
 		returnError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
