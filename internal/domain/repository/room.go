@@ -29,7 +29,15 @@ func (r *RoomRepository) GetByName(ctx context.Context, name string) (*models.Ro
 	}
 	row := stmt.QueryRowContext(ctx, name)
 	var room models.Room
-	err = row.Scan(&room)
+	err = row.Scan(
+		&room.ID,
+		&room.Name,
+		&room.Temperature,
+		&room.Humidity,
+		&room.IsFrontDoorLocked,
+		&room.IsCameraActive,
+		&room.IsAlarmActive,
+	)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, config.NotFoundError

@@ -29,7 +29,14 @@ func (r *DeviceRepository) GetByName(ctx context.Context, name string) (*models.
 	}
 	row := stmt.QueryRowContext(ctx, name)
 	var device models.Device
-	err = row.Scan(&device)
+	err = row.Scan(
+        &device.ID,
+        &device.Name,
+        &device.IsActive,
+        &device.ActiveFrom,
+        &device.RoomID,
+        &device.EnergyConsumingPerHour,
+    )
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, config.NotFoundError
