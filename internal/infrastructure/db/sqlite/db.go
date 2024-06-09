@@ -19,12 +19,17 @@ func InitDB(cfg *config.DatabaseConfig) *sql.DB {
 	}
 
 	db.SetMaxOpenConns(cfg.MaxOpenConns)
-    db.SetMaxIdleConns(cfg.MaxIdleConns)
-    db.SetConnMaxLifetime(cfg.ConnMaxLifetime)
+	db.SetMaxIdleConns(cfg.MaxIdleConns)
+	db.SetConnMaxLifetime(cfg.ConnMaxLifetime)
 
 	err = migrate(db)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	err = seed(db)
+	if err != nil {
+		log.Printf("Skipping seed data already exists: %v", err)
 	}
 
 	log.Println("Connected to SQLite database!")
