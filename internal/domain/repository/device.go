@@ -20,14 +20,14 @@ func NewDevice(db *sql.DB) models.DeviceRepository {
 	}
 }
 
-func (r *DeviceRepository) GetByName(ctx context.Context, name string) (*models.Device, error) {
-	query := `SELECT * FROM devices WHERE name = ?`
+func (r *DeviceRepository) GetById(ctx context.Context, id int) (*models.Device, error) {
+	query := `SELECT * FROM devices WHERE id = ?`
 	stmt, err := r.db.PrepareContext(ctx, query)
 	if err != nil {
 		log.Printf("Error preparing: %v", err)
 		return nil, config.InternalServerError
 	}
-	row := stmt.QueryRowContext(ctx, name)
+	row := stmt.QueryRowContext(ctx, id)
 	var device models.Device
 	err = row.Scan(
         &device.ID,

@@ -5,5 +5,5 @@ import (
 )
 
 type DeviceRepository interface {
-	GetByName(ctx context.Context, name string) (*Device, error)
+	GetById(ctx context.Context, id int) (*Device, error)
 }

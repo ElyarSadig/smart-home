@@ -16,8 +16,8 @@ func NewRoom(repo models.RoomRepository) *RoomService {
 	}
 }
 
-func (s *RoomService) GetByName(ctx context.Context, name string) (*models.Room, error) {
-	room, err := s.repository.GetByName(ctx, name)
+func (s *RoomService) GetById(ctx context.Context, id int) (*models.Room, error) {
+	room, err := s.repository.GetById(ctx, id)
 	if err != nil {
 		return nil, err
 	}

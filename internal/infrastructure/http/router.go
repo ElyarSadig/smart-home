@@ -9,8 +9,8 @@ import (
 func NewRouter(roomHandler *handler.RoomHandler, deviceHandler *handler.DeviceHandler) *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/device", deviceHandler.GetByName)
-	mux.HandleFunc("/room", roomHandler.GetByName)
+	mux.HandleFunc("/device/", deviceHandler.GetById)
+	mux.HandleFunc("/room/", roomHandler.GetById)
 
 	return mux
 }

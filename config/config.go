@@ -13,7 +13,6 @@ type ServerConfig struct {
 	ReadTimeout        time.Duration `yaml:"read_timeout"`
 	WriteTimeout       time.Duration `yaml:"write_timeout"`
 	IdleTimeout        time.Duration `yaml:"idle_timeout"`
-	CORSAllowedOrigins []string      `yaml:"cors_allowed_origins"`
 }
 
 type DatabaseConfig struct {

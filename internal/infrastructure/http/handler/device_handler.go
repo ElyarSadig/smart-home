@@ -3,6 +3,8 @@ package handler
 import (
 	"errors"
 	"net/http"
+	"strconv"
+	"strings"
 
 	"github.com/elyarsadig/smart-home-iot/config"
 	"github.com/elyarsadig/smart-home-iot/internal/domain/service"
@@ -16,21 +18,26 @@ func NewDevice(service *service.DeviceService) *DeviceHandler {
 	return &DeviceHandler{Service: service}
 }
 
-func (h *DeviceHandler) GetByName(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	name := r.URL.Query().Get("name")
-	if name == "" {
-		returnError(w, "name cannot be empty", http.StatusBadRequest)
-		return
-	}
-	device, err := h.Service.GetByName(ctx, name)
-	if err != nil {
-		if errors.Is(err, config.NotFoundError) {
-			returnError(w, "device not found", http.StatusNotFound)
+func (h *DeviceHandler) GetById(w http.ResponseWriter, r *http.Request) {
+	ok := checkMethod(w, r, GET)
+	if ok {
+		ctx := r.Context()
+		path := strings.TrimPrefix(r.URL.Path, "/device/")
+		deviceID := strings.TrimSuffix(path, "/")
+		id, err := strconv.Atoi(deviceID)
+		if err != nil {
+			returnError(w, "id must be an integer", http.StatusBadRequest)
 			return
 		}
-		returnError(w, err.Error(), http.StatusInternalServerError)
-		return
+		device, err := h.Service.GetById(ctx, id)
+		if err != nil {
+			if errors.Is(err, config.NotFoundError) {
+				returnError(w, "device not found", http.StatusNotFound)
+				return
+			}
+			returnError(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		returnSuccess(w, device)
 	}
-	returnSuccess(w, device)
 }

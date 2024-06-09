@@ -20,14 +20,14 @@ func NewRoom(db *sql.DB) models.RoomRepository {
 	}
 }
 
-func (r *RoomRepository) GetByName(ctx context.Context, name string) (*models.Room, error) {
-	query := `SELECT * FROM rooms WHERE name = ?`
+func (r *RoomRepository) GetById(ctx context.Context, id int) (*models.Room, error) {
+	query := `SELECT * FROM rooms WHERE id = ?`
 	stmt, err := r.db.PrepareContext(ctx, query)
 	if err != nil {
 		log.Printf("Error preparing: %v", err)
 		return nil, config.InternalServerError
 	}
-	row := stmt.QueryRowContext(ctx, name)
+	row := stmt.QueryRowContext(ctx, id)
 	var room models.Room
 	err = row.Scan(
 		&room.ID,

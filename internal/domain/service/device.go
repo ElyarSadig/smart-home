@@ -16,8 +16,8 @@ func NewDevice(repo models.DeviceRepository) *DeviceService {
 	}
 }
 
-func (s *DeviceService) GetByName(ctx context.Context, name string) (*models.Device, error) {
-	device, err := s.repository.GetByName(ctx, name)
+func (s *DeviceService) GetById(ctx context.Context, id int) (*models.Device, error) {
+	device, err := s.repository.GetById(ctx, id)
 	if err != nil {
 		return nil, err
 	}

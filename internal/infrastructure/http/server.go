@@ -15,7 +15,7 @@ import (
 )
 
 func SetupAndServe(cfg *config.Config, db *sql.DB, router *http.ServeMux) {
-	corsMiddleware := cors(cfg.Server.CORSAllowedOrigins)
+	corsMiddleware := cors()
 	wrappedRouter := corsMiddleware(router)
 
 	server := &http.Server{

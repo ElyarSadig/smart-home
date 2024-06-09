@@ -3,8 +3,6 @@ server:
   read_timeout: 15s
   write_timeout: 15s
   idle_timeout: 60s
-  cors_allowed_origins:
-    - "http://localhost:8080"
 database:
   file_path: "./internal/infrastructure/db/sqlite/smart_home.db"
   connection_timeout: 5s
