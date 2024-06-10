@@ -10,7 +10,12 @@ func NewRouter(roomHandler *handler.RoomHandler, deviceHandler *handler.DeviceHa
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/device/", deviceHandler.GetById)
+	mux.HandleFunc("/device", deviceHandler.UpdateDeviceActivity)
+
 	mux.HandleFunc("/room/", roomHandler.GetById)
+	// mux.HandleFunc("/room/door")
+	// mux.HandleFunc("/room/camera")
+	// mux.HandleFunc("/room/alarm")
 
 	return mux
 }

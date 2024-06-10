@@ -18,7 +18,14 @@ type ErrorResponse struct {
 	Message string `json:"message"`
 }
 
+type SuccessResponse struct {
+	Message string `json:"message"`
+}
+
 func returnSuccess(w http.ResponseWriter, response any) {
+	if response == nil {
+		response = SuccessResponse{Message: "success"}
+	}
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)
@@ -37,4 +44,8 @@ func checkMethod(w http.ResponseWriter, r *http.Request, method httpMethod) bool
 		return false
 	}
 	return true
+}
+
+func unmarshalRequest(r *http.Request, data any) error {
+	return json.NewDecoder(r.Body).Decode(data)
 }

@@ -23,3 +23,11 @@ func (s *DeviceService) GetById(ctx context.Context, id int) (*models.Device, er
 	}
 	return device, nil
 }
+
+func (s *DeviceService) UpdateDeviceActivity(ctx context.Context, id int, activity bool) (error) {
+	err := s.repository.UpdateDeviceActivity(ctx, id, activity)
+	if err != nil {
+		return err
+	}
+	return nil
+}

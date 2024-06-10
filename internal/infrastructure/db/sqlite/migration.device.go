@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS devices (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(255) UNIQUE NOT NULL,
     is_active BOOLEAN NOT NULL,
-    active_from DATETIME,
+    updated_at DATETIME,
 	room_id INTEGER,
 	energy_consuming_per_hour REAL NOT NULL,
 	FOREIGN KEY (room_id) REFERENCES rooms(id)

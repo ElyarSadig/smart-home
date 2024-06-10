@@ -41,3 +41,22 @@ func (h *DeviceHandler) GetById(w http.ResponseWriter, r *http.Request) {
 		returnSuccess(w, device)
 	}
 }
+
+func (h *DeviceHandler) UpdateDeviceActivity(w http.ResponseWriter, r *http.Request) {
+	ok := checkMethod(w, r, POST)
+	if ok {
+		ctx := r.Context()
+		var req DeviceActivityRequest
+		err := unmarshalRequest(r, &req)
+		if err != nil {
+			returnError(w, "error in unmarshalling request", http.StatusBadRequest)
+			return
+		}
+		err = h.Service.UpdateDeviceActivity(ctx, req.ID, req.Active)
+		if err != nil {
+			returnError(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		returnSuccess(w, nil)
+	}
+}
