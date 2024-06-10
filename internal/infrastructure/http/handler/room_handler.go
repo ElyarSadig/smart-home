@@ -41,3 +41,22 @@ func (h *RoomHandler) GetById(w http.ResponseWriter, r *http.Request) {
 		returnSuccess(w, room)
 	}
 }
+
+func (h *RoomHandler) UpdateRoomStatus(w http.ResponseWriter, r *http.Request) {
+	ok := checkMethod(w, r, PUT)
+	if ok {
+		ctx := r.Context()
+		var req RoomStatusRequest
+		err := unmarshalRequest(r, &req)
+		if err != nil {
+			returnError(w, "error in unmarshalRequest", http.StatusBadRequest)
+			return
+		}
+		err = h.Service.UpdateRoomStatus(ctx, req.ID, req.DoorStatus, req.CameraStatus, req.AlarmStatus)
+		if err != nil {
+			returnError(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		returnSuccess(w, nil)
+	}
+}

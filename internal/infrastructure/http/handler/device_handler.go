@@ -43,7 +43,7 @@ func (h *DeviceHandler) GetById(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *DeviceHandler) UpdateDeviceActivity(w http.ResponseWriter, r *http.Request) {
-	ok := checkMethod(w, r, POST)
+	ok := checkMethod(w, r, PUT)
 	if ok {
 		ctx := r.Context()
 		var req DeviceActivityRequest

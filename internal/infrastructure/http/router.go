@@ -13,9 +13,7 @@ func NewRouter(roomHandler *handler.RoomHandler, deviceHandler *handler.DeviceHa
 	mux.HandleFunc("/device", deviceHandler.UpdateDeviceActivity)
 
 	mux.HandleFunc("/room/", roomHandler.GetById)
-	// mux.HandleFunc("/room/door")
-	// mux.HandleFunc("/room/camera")
-	// mux.HandleFunc("/room/alarm")
+	mux.HandleFunc("/room", roomHandler.UpdateRoomStatus)
 
 	return mux
 }

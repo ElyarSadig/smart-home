@@ -23,3 +23,11 @@ func (s *RoomService) GetById(ctx context.Context, id int) (*models.Room, error)
 	}
 	return room, nil
 }
+
+func (s *RoomService) UpdateRoomStatus(ctx context.Context, id int, frontDoorStatus, cameraStatus, alarmStatus bool) error {
+	err := s.repository.UpdateRoomStatus(ctx, id, frontDoorStatus, cameraStatus, alarmStatus)
+	if err != nil {
+		return err
+	}
+	return nil
+}
