@@ -30,9 +30,8 @@ func main() {
 
 	router := httpPackage.NewRouter(roomHandler, deviceHandler)
 
-	// worker 1
 	go iot.AirConditionerWorker(ctx, db)
-	// worker 2
+	go iot.AirHumidifeirWorker(ctx, db)
 
 	httpPackage.SetupAndServe(cfg, db, router)
 }
