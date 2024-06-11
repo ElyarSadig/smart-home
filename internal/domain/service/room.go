@@ -41,7 +41,7 @@ func (s *RoomService) GetRoomEnergySaving(ctx context.Context, id int) (float64,
 	now := time.Now()
 	var totalEnergySaving float64
 	for _, device := range devices {
-		duration := now.Sub(*device.UpdatedAT)
+		duration := now.Sub(device.UpdatedAT)
 		totalEnergySaving += duration.Minutes() * device.EnergyConsumingPerHour / 60
 	}
 	return totalEnergySaving, nil
