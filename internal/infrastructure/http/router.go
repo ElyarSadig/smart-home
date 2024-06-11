@@ -14,6 +14,7 @@ func NewRouter(roomHandler *handler.RoomHandler, deviceHandler *handler.DeviceHa
 
 	mux.HandleFunc("/room/", roomHandler.GetById)
 	mux.HandleFunc("/room", roomHandler.UpdateRoomStatus)
+	mux.HandleFunc("/room/energy-saving/", roomHandler.GetRoomEnergySaving)
 
 	return mux
 }

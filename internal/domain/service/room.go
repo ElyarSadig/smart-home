@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"time"
 
 	"github.com/elyarsadig/smart-home-iot/internal/domain/models"
 )
@@ -30,4 +31,18 @@ func (s *RoomService) UpdateRoomStatus(ctx context.Context, id int, frontDoorSta
 		return err
 	}
 	return nil
+}
+
+func (s *RoomService) GetRoomEnergySaving(ctx context.Context, id int) (float64, error) {
+	devices, err := s.repository.GetRoomInActiveDevices(ctx, id)
+	if err != nil {
+		return 0, err
+	}
+	now := time.Now()
+	var totalEnergySaving float64
+	for _, device := range devices {
+		duration := now.Sub(*device.UpdatedAT)
+		totalEnergySaving += duration.Minutes() * device.EnergyConsumingPerHour / 60
+	}
+	return totalEnergySaving, nil
 }

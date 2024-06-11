@@ -11,3 +11,7 @@ type RoomStatusRequest struct {
 	CameraStatus bool `json:"camera_status"`
 	AlarmStatus  bool `json:"alarm_status"`
 }
+
+type EnergySavingResponse struct {
+	TotalEnergySaving float64 `json:"total_energy_saving"`
+}

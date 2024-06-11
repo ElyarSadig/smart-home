@@ -60,3 +60,26 @@ func (h *RoomHandler) UpdateRoomStatus(w http.ResponseWriter, r *http.Request) {
 		returnSuccess(w, nil)
 	}
 }
+
+func (h *RoomHandler) GetRoomEnergySaving(w http.ResponseWriter, r *http.Request) {
+	ok := checkMethod(w, r, GET)
+	if ok {
+		ctx := r.Context()
+		path := strings.TrimPrefix(r.URL.Path, "/room/energy-saving/")
+		roomID := strings.TrimSuffix(path, "/")
+		id, err := strconv.Atoi(roomID)
+		if err != nil {
+			returnError(w, "id must be an integer", http.StatusBadRequest)
+			return
+		}
+		energySaving, err := h.Service.GetRoomEnergySaving(ctx, id)
+		if err != nil {
+			returnError(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		res := EnergySavingResponse{
+			TotalEnergySaving: energySaving,
+		}
+		returnSuccess(w, res)
+	}
+}
