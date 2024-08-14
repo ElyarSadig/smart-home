@@ -2,6 +2,11 @@
 
 This repository hosts the backend for a smart home IoT system built with Go. The backend manages smart devices and rooms, providing APIs to interact with them. It also includes server configuration for production, and simulates device activities.
 
+### Accessing the Front-End
+
+The front-end for this project is developed in Vue.js and is available in a separate repository. You can find it here: [Smart Home IoT Front-End](https://github.com/ElyarSadig/smart-home-iot).
+
+
 ## Table of Contents
 
 - [Smart Home IoT Backend](#smart-home-iot-backend)
@@ -62,10 +67,6 @@ Start the server with:
 ```
 
 The server will be accessible at `http://localhost:8080`.
-
-### Accessing the Front-End
-
-The front-end for this project is developed in Vue.js and is available in a separate repository. You can find it here: [Smart Home IoT Front-End](https://github.com/ElyarSadig/smart-home-iot).
 
 ## API Endpoints
 
